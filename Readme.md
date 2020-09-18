@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Роман Самсонов](https://up.htmlacademy.ru/javascript/21/user/1327603).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Зольников](https://up.htmlacademy.ru/javascript/21/user/870391).
 
 ---
 
