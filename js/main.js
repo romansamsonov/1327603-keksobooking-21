@@ -118,10 +118,9 @@ renderAds();
 
 let renderPopup = () => {
   const fragment = document.createDocumentFragment();
+  const cardElement = cardTemplate.cloneNode(true);
 
   let renderCard = (ad) => {
-    const cardElement = cardTemplate.cloneNode(true);
-
     cardElement.querySelector(`.popup__title`).textContent = ad.offer.title;
     cardElement.querySelector(`.popup__text--address`).textContent = ad.offer.address;
     cardElement.querySelector(`.popup__text--price`).textContent = `${ad.offer.price}₽/ночь`;
