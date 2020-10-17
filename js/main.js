@@ -2,11 +2,16 @@
 
 const COUNT_ADS = 8;
 
+const palace = `Дворец`;
+const flat = `Квартира`;
+const house = `Дом`;
+const bungalow = `Бунгало`;
+
 const TYPES = [
-  `palace`,
-  `flat`,
-  `house`,
-  `bungalow`
+  palace,
+  flat,
+  house,
+  bungalow
 ];
 
 const TIMES = [
@@ -34,8 +39,10 @@ const X_OFFSET = -25;
 
 const Y_OFFSET = -70;
 
+const map = document.querySelector(`.map`);
 const pinList = document.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 
 let getRandomInteger = (min, max) => {
   let rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -88,7 +95,7 @@ let generateAds = () => {
 const ads = generateAds();
 
 let renderAds = () => {
-  document.querySelector(`.map`).classList.remove(`.map__faded`);
+  map.classList.remove(`map--faded`);
   const fragment = document.createDocumentFragment();
 
   let renderPin = (ad) => {
@@ -107,5 +114,55 @@ let renderAds = () => {
 
   pinList.appendChild(fragment);
 };
-
 renderAds();
+
+let renderCard = (ad) => {
+  const cardElement = cardTemplate.cloneNode(true);
+
+  cardElement.querySelector(`.popup__title`).textContent = ad.offer.title;
+  cardElement.querySelector(`.popup__text--address`).textContent = ad.offer.address;
+  cardElement.querySelector(`.popup__text--price`).textContent = `${ad.offer.price}₽/ночь`;
+  cardElement.querySelector(`.popup__type`).textContent = ad.offer.type;
+  cardElement.querySelector(`.popup__text--capacity`).textContent = `${ad.offer.rooms} комнаты для ${ad.offer.guests} гостей`;
+  cardElement.querySelector(`.popup__text--time`).textContent = `Заезд после ${ad.offer.checkin}, выезд до ${ad.offer.checkout}`;
+
+  let renderFeatures = () => {
+    const featuresList = cardElement.querySelector(`.popup__features`);
+    while (featuresList.firstElementChild) {
+      featuresList.firstElementChild.remove();
+    }
+    let featureFragment = document.createDocumentFragment();
+    for (let i = 0; i < ad.offer.features.length; i++) {
+      let featureItem = document.createElement(`li`);
+      featureItem.classList.add(`popup__feature`);
+      featureItem.classList.add(`popup__feature--${ad.offer.features[i]}`);
+      featureFragment.appendChild(featureItem);
+    }
+    featuresList.appendChild(featureFragment);
+  };
+  renderFeatures();
+
+  cardElement.querySelector(`.popup__description`).textContent = ad.offer.description;
+
+  let renderPhoto = () => {
+    const photosList = cardElement.querySelector(`.popup__photos`);
+    const photoTemplate = photosList.firstElementChild;
+    while (photosList.firstElementChild) {
+      photosList.firstElementChild.remove();
+    }
+    let photoFragment = document.createDocumentFragment();
+    for (let i = 0; i < ad.offer.photos.length; i++) {
+      const photoElement = photoTemplate.cloneNode(true);
+      photoElement.src = ad.offer.photos[i];
+      photoFragment.appendChild(photoElement);
+    }
+    photosList.appendChild(photoFragment);
+  };
+  renderPhoto();
+
+  cardElement.querySelector(`.popup__avatar`).src = ad.author.avatar;
+
+  map.insertBefore(cardElement, map.children[1]);
+  return cardElement;
+};
+renderCard(ads[0]);
