@@ -8,14 +8,14 @@ const TYPES = [
   `house`,
   `palace`
 ];
-
+/*
 const offerTypes = {
   bungalow: `Бунгало`,
   flat: `Квартира`,
   house: `Дом`,
   palace: `Дворец`
 };
-
+*/
 const priceTypes = {
   bungalow: 0,
   flat: 1000,
@@ -50,7 +50,7 @@ const Y_OFFSET = -70;
 const map = document.querySelector(`.map`);
 const pinList = document.querySelector(`.map__pins`);
 const pinTemplate = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
-const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
+// const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 const adForm = document.querySelector(`.ad-form`);
 const adFormFieldsets = adForm.children;
 const address = adForm.querySelector(`#address`);
